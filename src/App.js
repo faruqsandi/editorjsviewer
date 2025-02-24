@@ -23,7 +23,7 @@ const App = () => {
         });
       }
     };
-  }, [editor]);
+  }, []);
 
   const handleFileUpload = (event) => {
     const fileReader = new FileReader();
@@ -46,9 +46,26 @@ const App = () => {
     fileReader.readAsText(event.target.files[0]);
   };
 
+  const handleSaveToFile = () => {
+    if (editor) {
+      editor.save().then((outputData) => {
+        const blob = new Blob([JSON.stringify(outputData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'editor-content.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      }).catch((error) => {
+        console.error('Saving failed: ', error);
+      });
+    }
+  };
+
   return (
     <div className="App">
       <input type="file" onChange={handleFileUpload} />
+      <button onClick={handleSaveToFile}>Save to File</button>
       <div id="editor"></div>
     </div>
   );
