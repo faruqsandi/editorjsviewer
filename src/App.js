@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import Table from '@editorjs/table';
 
 const App = () => {
   const [editor, setEditor] = useState(null);
@@ -10,7 +12,22 @@ const App = () => {
         holder: 'editor',
         // Your Editor.js configurations/tools go here
         // For example:
-        tools: {},
+        tools: {
+          header: {
+            class: Header,
+            shortcut: 'CMD+SHIFT+H',
+          },
+          table: {
+            class: Table,
+            inlineToolbar: true,
+            config: {
+              rows: 2,
+              cols: 3,
+              maxRows: 5,
+              maxCols: 5,
+            },
+          },
+        },
       });
 
       setEditor(initializedEditor);
@@ -23,7 +40,7 @@ const App = () => {
         });
       }
     };
-  }, []);
+  }, [editor]);
 
   const handleFileUpload = (event) => {
     const fileReader = new FileReader();
