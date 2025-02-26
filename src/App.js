@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import Table from '@editorjs/table';
+import ImageTool from '@editorjs/image';
+import Delimiter from '@editorjs/delimiter';
 
 const App = () => {
   const [editor, setEditor] = useState(null);
@@ -27,6 +29,11 @@ const App = () => {
               maxCols: 5,
             },
           },
+          image: {
+            class: ImageTool,
+          },
+          delimiter: Delimiter,
+
         },
       });
 
